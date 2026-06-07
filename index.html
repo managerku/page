@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Managerku.id | Operational System Partner</title>
+  <meta name="description" content="Managerku.id membantu bisnis merapikan operasional, tim, database, laporan, dan dashboard manajemen agar lebih mudah dikontrol." />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      font-family: 'Inter', sans-serif;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: #050505;
+      color: #ffffff;
+      overflow-x: hidden;
+    }
+
+    ::selection {
+      background: #00ff66;
+      color: #000000;
+    }
+
+    .green-gradient {
+      background: linear-gradient(135deg, #00ff66, #00b84d, #7cff6b);
+      background-size: 200% 200%;
+      animation: gradientMove 5s ease infinite;
+    }
+
+    .text-green-gradient {
+      background: linear-gradient(135deg, #00ff66, #00b84d, #7cff6b);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradientMove 5s ease infinite;
+    }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.045);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+
+    .premium-card {
+      position: relative;
+      overflow: hidden;
+      transition: all 0.45s ease;
+    }
+
+    .premium-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(0, 255, 102, 0.12),
+        transparent
+      );
+      transform: translateX(-100%);
+      transition: transform 0.8s ease;
+      pointer-events: none;
+    }
+
+    .premium-card:hover::before {
+      transform: translateX(100%);
+    }
+
+    .premium-card:hover {
+      transform: translateY(-10px);
+      border-color: rgba(0, 255, 102, 0.55);
+      box-shadow: 0 25px 80px rgba(0, 255, 102, 0.12);
+    }
+
+    .soft-glow {
+      box-shadow: 0 0 90px rgba(0, 255, 102, 0.18);
+    }
+
+    .grid-bg {
+      background-image:
+        linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+      background-size: 44px 44px;
+    }
+
+    .noise-overlay {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.035;
+      background-image: radial-gradient(#ffffff 0.7px, transparent 0.7px);
+      background-size: 4px 4px;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(42px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .floating {
+      animation: floating 5s ease-in-out infinite;
+    }
+
+    .floating-slow {
+      animation: floating 7s ease-in-out infinite;
+    }
+
+    .pulse-glow {
+      animation: pulseGlow 4s ease-in-out infinite;
+    }
+
+    .marquee-wrapper {
+      overflow: hidden;
+      width: 100%;
+    }
+
+    .marquee-track {
+      display: flex;
+      width: max-content;
+      animation: marquee 28s linear infinite;
+    }
+
+    .marquee-track:hover {
+      animation-play-state: paused;
+    }
+
+    .nav-scrolled {
+      background: rgba(0, 0, 0, 0.88);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.45);
+    }
+
+    .magnetic-btn {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .magnetic-btn::after {
+      content: "";
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      background: rgba(255, 255, 255, 0.32);
+      border-radius: 999px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      transition: transform 0.45s ease;
+    }
+
+    .magnetic-btn:hover::after {
+      transform: translate(-50%, -50%) scale(1.8);
+    }
+
+    .magnetic-btn span {
+      position: relative;
+      z-index: 2;
+    }
+
+    .portfolio-image {
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+    }
+
+    .image-placeholder {
+      background:
+        radial-gradient(circle at top right, rgba(0, 255, 102, 0.24), transparent 35%),
+        linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+    }
+
+    @keyframes gradientMove {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    @keyframes floating {
+      0%, 100% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-18px);
+      }
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% {
+        opacity: 0.45;
+        transform: scale(1);
+      }
+      50% {
+        opacity: 0.85;
+        transform: scale(1.08);
+      }
+    }
+
+    @keyframes marquee {
+      from {
+        transform: translateX(0);
+      }
+      to {
+        transform: translateX(-50%);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
+      }
+
+      .reveal {
+        opacity: 1;
+        transform: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="noise-overlay"></div>
+
+  <!-- NAVBAR -->
+  <header id="navbar" class="fixed top-0 left-0 w-full z-50 bg-black/65 backdrop-blur-xl border-b border-white/10 transition-all duration-500">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="#home" class="flex items-center gap-3 group">
+        <div class="w-10 h-10 rounded-full bg-white flex items-center justify-center overflow-hidden ring-1 ring-white/10 group-hover:ring-green-400/60 transition">
+          <img src="assets/logo/mainlogo.png" alt="Managerku.id Logo" class="w-full h-full object-cover">
+        </div>
+        <span class="font-bold text-xl tracking-tight group-hover:text-green-400 transition">Managerku.id</span>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-8 text-sm text-gray-300">
+        <a href="#clients" class="hover:text-green-400 transition">Partners</a>
+        <a href="#portfolio" class="hover:text-green-400 transition">Solutions</a>
+        <a href="#about" class="hover:text-green-400 transition">About</a>
+        <a href="#contact" class="hover:text-green-400 transition">Contact</a>
+      </nav>
+
+      <a href="https://wa.me/6281521889935?text=Halo%20Managerku.id%2C%20saya%20ingin%20konsultasi%20tentang%20sistem%20untuk%20bisnis%20saya.%20Bisa%20dibantu%20untuk%20memetakan%20kebutuhan%20operasional%20dan%20rekomendasi%20sistem%20yang%20sesuai%3F" target="_blank" rel="noopener noreferrer" class="hidden md:inline-flex px-5 py-2.5 rounded-full green-gradient text-black font-bold hover:scale-105 transition magnetic-btn">
+        <span>Konsultasi</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section id="home" class="relative min-h-screen flex items-center overflow-hidden grid-bg pt-28">
+    <div class="absolute top-24 right-10 w-72 h-72 bg-green-500/20 rounded-full blur-3xl pulse-glow"></div>
+    <div class="absolute bottom-10 left-10 w-72 h-72 bg-green-400/10 rounded-full blur-3xl pulse-glow"></div>
+    <div class="absolute top-1/2 left-1/2 w-[620px] h-[620px] -translate-x-1/2 -translate-y-1/2 border border-green-400/10 rounded-full"></div>
+    <div class="absolute top-1/2 left-1/2 w-[820px] h-[820px] -translate-x-1/2 -translate-y-1/2 border border-white/5 rounded-full"></div>
+
+    <div class="max-w-7xl mx-auto px-6 py-20 grid lg:grid-cols-2 gap-14 items-center relative z-10">
+
+      <div class="reveal">
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-green-500/30 bg-green-500/10 text-green-400 text-sm font-semibold mb-6">
+          <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+          Operational System Partner for Growing Business
+        </div>
+
+        <h1 class="text-4xl md:text-6xl lg:text-7xl font-black leading-tight mb-6">
+          Rapikan Operasional Bisnismu,
+          <span class="text-green-gradient">Tanpa Harus Mengontrol</span>
+          Semuanya Sendiri.
+        </h1>
+
+        <p class="text-lg md:text-xl text-gray-300 leading-relaxed mb-9 max-w-2xl">
+          Managerku.id membantu bisnis membangun sistem kerja yang lebih rapi, terukur, dan mudah dipantau, mulai dari alur operasional, aktivitas tim, database, laporan, hingga dashboard manajemen.
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="https://wa.me/6281521889935?text=Halo%20Managerku.id%2C%20saya%20ingin%20konsultasi%20tentang%20sistem%20untuk%20bisnis%20saya.%20Saat%20ini%20saya%20ingin%20merapikan%20operasional%2C%20tim%2C%20data%2C%20dan%20laporan%20agar%20lebih%20mudah%20dikontrol.%20Bisa%20dibantu%20untuk%20diskusi%3F" target="_blank" rel="noopener noreferrer" class="px-7 py-4 rounded-full green-gradient text-black font-extrabold text-center hover:scale-105 transition magnetic-btn">
+            <span>Konsultasikan Sistem Bisnismu</span>
+          </a>
+
+          <a href="#portfolio" class="px-7 py-4 rounded-full border border-white/20 text-white font-bold text-center hover:border-green-400 hover:text-green-400 hover:bg-green-400/5 transition">
+            Lihat Solusi yang Pernah Dibangun
+          </a>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-12 max-w-3xl">
+          <div class="glass-card rounded-2xl p-4 hover:border-green-400/40 transition">
+            <h3 class="text-xl font-black text-green-400">Operasional</h3>
+            <p class="text-sm text-gray-400">Lebih rapi dan tidak tercecer</p>
+          </div>
+          <div class="glass-card rounded-2xl p-4 hover:border-green-400/40 transition">
+            <h3 class="text-xl font-black text-green-400">Tim</h3>
+            <p class="text-sm text-gray-400">Lebih mudah dipantau</p>
+          </div>
+          <div class="glass-card rounded-2xl p-4 hover:border-green-400/40 transition">
+            <h3 class="text-xl font-black text-green-400">Data</h3>
+            <p class="text-sm text-gray-400">Lebih siap dievaluasi</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="relative flex justify-center reveal">
+        <div class="absolute w-80 h-80 bg-green-500/20 rounded-full blur-3xl floating-slow"></div>
+
+        <div class="relative glass-card rounded-[2rem] p-8 soft-glow max-w-md w-full floating">
+          <div class="absolute -top-4 -right-4 px-4 py-2 rounded-full green-gradient text-black text-xs font-black shadow-xl">
+            SYSTEMIZED BUSINESS
+          </div>
+
+          <div class="w-32 h-32 mx-auto rounded-full bg-black border border-white/10 flex items-center justify-center mb-8 overflow-hidden ring-4 ring-green-400/10">
+            <img src="assets/logo/mainlogo.png" alt="Managerku.id Logo" class="w-full h-full object-cover">
+          </div>
+
+          <div class="space-y-4">
+            <div class="glass-card rounded-2xl p-4 premium-card">
+              <p class="text-sm text-gray-400 mb-1">Problem</p>
+              <h3 class="font-bold text-lg">Data tercecer, proses manual, dan laporan sulit dipantau</h3>
+            </div>
+
+            <div class="glass-card rounded-2xl p-4 premium-card">
+              <p class="text-sm text-gray-400 mb-1">Solution</p>
+              <h3 class="font-bold text-lg text-green-400">Sistem kerja yang menyatukan alur, data, tim, dan laporan</h3>
+            </div>
+
+            <div class="glass-card rounded-2xl p-4 premium-card">
+              <p class="text-sm text-gray-400 mb-1">Result</p>
+              <h3 class="font-bold text-lg">Owner dan manajemen lebih mudah mengambil keputusan</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CLIENTS SECTION -->
+  <section id="clients" class="py-24 bg-white text-black overflow-hidden">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-14 reveal">
+        <p class="text-green-600 font-bold mb-3">TRUSTED PARTNERS</p>
+        <h2 class="text-3xl md:text-5xl font-black mb-4">
+          Dipercaya untuk Membantu Merapikan Sistem Kerja
+        </h2>
+        <p class="text-gray-600 max-w-2xl mx-auto">
+          Kami membantu bisnis, lembaga, dan tim operasional membangun sistem yang membuat pekerjaan lebih tertata, data lebih mudah dibaca, dan proses harian lebih mudah dikontrol.
+        </p>
+      </div>
+
+      <div class="relative reveal">
+        <div class="absolute left-0 top-0 h-full w-24 bg-gradient-to-r from-white to-transparent z-10"></div>
+        <div class="absolute right-0 top-0 h-full w-24 bg-gradient-to-l from-white to-transparent z-10"></div>
+
+        <div class="marquee-wrapper">
+          <div class="marquee-track gap-5">
+
+            <div class="group border border-gray-200 rounded-2xl px-10 py-7 min-w-[190px] h-[96px] flex items-center justify-center text-center hover:border-green-500 hover:shadow-xl hover:shadow-green-500/10 transition bg-white">
+              <img src="assets/clients/logobep.jpeg" alt="BEP English" class="max-h-12 max-w-[150px] object-contain grayscale group-hover:grayscale-0 transition duration-500">
+            </div>
+
+            <div class="group border border-gray-200 rounded-2xl px-10 py-7 min-w-[190px] h-[96px] flex items-center justify-center text-center hover:border-green-500 hover:shadow-xl hover:shadow-green-500/10 transition bg-white">
+              <img src="assets/clients/laundryku.png" alt="Laundryku.id" class="max-h-12 max-w-[150px] object-contain grayscale group-hover:grayscale-0 transition duration-500">
+            </div>
+
+            <div class="group border border-gray-200 rounded-2xl px-10 py-7 min-w-[190px] h-[96px] flex items-center justify-center text-center hover:border-green-500 hover:shadow-xl hover:shadow-green-500/10 transition bg-white">
+              <img src="assets/clients/logobep.jpeg" alt="BEP English" class="max-h-12 max-w-[150px] object-contain grayscale group-hover:grayscale-0 transition duration-500">
+            </div>
+
+            <div class="group border border-gray-200 rounded-2xl px-10 py-7 min-w-[190px] h-[96px] flex items-center justify-center text-center hover:border-green-500 hover:shadow-xl hover:shadow-green-500/10 transition bg-white">
+              <img src="assets/clients/laundryku.png" alt="Laundryku.id" class="max-h-12 max-w-[150px] object-contain grayscale group-hover:grayscale-0 transition duration-500">
+            </div>
+
+            <div class="group border border-gray-200 rounded-2xl px-10 py-7 min-w-[190px] h-[96px] flex items-center justify-center text-center hover:border-green-500 hover:shadow-xl hover:shadow-green-500/10 transition bg-white">
+              <img src="assets/logo/mainlogo.png" alt="Managerku.id" class="max-h-12 max-w-[150px] object-contain grayscale group-hover:grayscale-0 transition duration-500">
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PORTFOLIO SECTION -->
+  <section id="portfolio" class="py-24 bg-black relative overflow-hidden">
+    <div class="absolute top-0 right-0 w-96 h-96 bg-green-500/10 rounded-full blur-3xl"></div>
+
+    <div class="max-w-7xl mx-auto px-6 relative z-10">
+      <div class="mb-14 reveal">
+        <p class="text-green-400 font-bold mb-3">OUR WORK</p>
+        <h2 class="text-3xl md:text-5xl font-black mb-5">
+          Solusi Sistem yang Pernah Kami Bangun
+        </h2>
+        <p class="text-gray-300 max-w-3xl text-lg leading-relaxed">
+          Setiap bisnis punya masalah operasional yang berbeda. Karena itu, kami membangun sistem berdasarkan alur kerja nyata, bukan sekadar fitur. Fokusnya adalah membantu bisnis bekerja lebih rapi, lebih cepat, dan lebih mudah dievaluasi.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <div class="glass-card rounded-3xl p-7 premium-card reveal">
+          <div class="rounded-2xl overflow-hidden mb-6 border border-white/10 image-placeholder">
+            <img src="assets/solution/solusi1.png" alt="Sistem Manajemen Operasional" class="portfolio-image w-full">
+          </div>
+
+          <div class="flex items-center justify-between gap-4 mb-4">
+            <span class="inline-flex px-3 py-1 rounded-full bg-green-500/10 border border-green-500/20 text-green-400 text-xs font-bold">
+              Operational System
+            </span>
+            <span class="text-gray-500 text-sm font-black">01</span>
+          </div>
+
+          <h3 class="text-2xl font-black mb-3">Sistem Manajemen Operasional</h3>
+
+          <p class="text-gray-400 mb-5">
+            Membantu bisnis mencatat, memantau, dan mengelola proses operasional harian agar tidak bergantung pada catatan manual.
+          </p>
+
+          <ul class="space-y-2 text-sm text-gray-300">
+            <li>✓ Alur kerja lebih jelas</li>
+            <li>✓ Aktivitas lebih mudah dipantau</li>
+            <li>✓ Laporan lebih cepat tersedia</li>
+          </ul>
+        </div>
+
+        <div class="glass-card rounded-3xl p-7 premium-card reveal">
+          <div class="rounded-2xl overflow-hidden mb-6 border border-white/10 image-placeholder">
+            <img src="assets/solution/solusi2.png" alt="Sistem Absensi & Monitoring Tim" class="portfolio-image w-full">
+          </div>
+
+          <div class="flex items-center justify-between gap-4 mb-4">
+            <span class="inline-flex px-3 py-1 rounded-full bg-green-500/10 border border-green-500/20 text-green-400 text-xs font-bold">
+              HR System
+            </span>
+            <span class="text-gray-500 text-sm font-black">02</span>
+          </div>
+
+          <h3 class="text-2xl font-black mb-3">Sistem Absensi & Monitoring Tim</h3>
+
+          <p class="text-gray-400 mb-5">
+            Membantu manajemen memantau kehadiran, aktivitas, dan kedisiplinan tim secara lebih objektif.
+          </p>
+
+          <ul class="space-y-2 text-sm text-gray-300">
+            <li>✓ Check-in berbasis lokasi</li>
+            <li>✓ Rekap kehadiran otomatis</li>
+            <li>✓ Monitoring performa tim</li>
+          </ul>
+        </div>
+
+        <div class="glass-card rounded-3xl p-7 premium-card reveal">
+          <div class="rounded-2xl overflow-hidden mb-6 border border-white/10 image-placeholder">
+            <img src="assets/solution/solusi3.png" alt="Sistem Recruitment & Seleksi" class="portfolio-image w-full">
+          </div>
+
+          <div class="flex items-center justify-between gap-4 mb-4">
+            <span class="inline-flex px-3 py-1 rounded-full bg-green-500/10 border border-green-500/20 text-green-400 text-xs font-bold">
+              Recruitment System
+            </span>
+            <span class="text-gray-500 text-sm font-black">03</span>
+          </div>
+
+          <h3 class="text-2xl font-black mb-3">Sistem Recruitment & Seleksi</h3>
+
+          <p class="text-gray-400 mb-5">
+            Merapikan proses rekrutmen dari pendaftaran, seleksi, assessment, hingga keputusan akhir agar HR lebih mudah mengelola kandidat.
+          </p>
+
+          <ul class="space-y-2 text-sm text-gray-300">
+            <li>✓ Tracking kandidat</li>
+            <li>✓ Tahapan seleksi lebih jelas</li>
+            <li>✓ Dashboard evaluasi pelamar</li>
+          </ul>
+        </div>
+
+        <div class="glass-card rounded-3xl p-7 premium-card reveal">
+          <div class="rounded-2xl overflow-hidden mb-6 border border-white/10 image-placeholder">
+            <img src="assets/solution/solusi4.png" alt="Dashboard Manajemen" class="portfolio-image w-full">
+          </div>
+
+          <div class="flex items-center justify-between gap-4 mb-4">
+            <span class="inline-flex px-3 py-1 rounded-full bg-green-500/10 border border-green-500/20 text-green-400 text-xs font-bold">
+              Management Dashboard
+            </span>
+            <span class="text-gray-500 text-sm font-black">04</span>
+          </div>
+
+          <h3 class="text-2xl font-black mb-3">Dashboard Manajemen</h3>
+
+          <p class="text-gray-400 mb-5">
+            Menyajikan data penting bisnis dalam tampilan yang mudah dibaca agar owner dan manajemen bisa mengambil keputusan lebih cepat.
+          </p>
+
+          <ul class="space-y-2 text-sm text-gray-300">
+            <li>✓ Ringkasan data bisnis</li>
+            <li>✓ Laporan lebih visual</li>
+            <li>✓ Evaluasi lebih terukur</li>
+          </ul>
+        </div>
+
+        <div class="glass-card rounded-3xl p-7 premium-card reveal">
+          <div class="rounded-2xl overflow-hidden mb-6 border border-white/10 image-placeholder">
+            <img src="assets/solution/solusi5.png" alt="Database & Automasi Proses" class="portfolio-image w-full">
+          </div>
+
+          <div class="flex items-center justify-between gap-4 mb-4">
+            <span class="inline-flex px-3 py-1 rounded-full bg-green-500/10 border border-green-500/20 text-green-400 text-xs font-bold">
+              Database Automation
+            </span>
+            <span class="text-gray-500 text-sm font-black">05</span>
+          </div>
+
+          <h3 class="text-2xl font-black mb-3">Database & Automasi Proses</h3>
+
+          <p class="text-gray-400 mb-5">
+            Merapikan data yang sebelumnya tercecer dan mengotomatisasi pekerjaan repetitif agar tim bisa fokus pada pekerjaan yang lebih penting.
+          </p>
+
+          <ul class="space-y-2 text-sm text-gray-300">
+            <li>✓ Database lebih tertata</li>
+            <li>✓ Proses manual berkurang</li>
+            <li>✓ Risiko human error menurun</li>
+          </ul>
+        </div>
+
+        <div class="glass-card rounded-3xl p-7 premium-card reveal">
+          <div class="rounded-2xl overflow-hidden mb-6 border border-white/10 image-placeholder">
+            <img src="assets/solution/solusi6.png" alt="Custom Internal System" class="portfolio-image w-full">
+          </div>
+
+          <div class="flex items-center justify-between gap-4 mb-4">
+            <span class="inline-flex px-3 py-1 rounded-full bg-green-500/10 border border-green-500/20 text-green-400 text-xs font-bold">
+              Internal System
+            </span>
+            <span class="text-gray-500 text-sm font-black">06</span>
+          </div>
+
+          <h3 class="text-2xl font-black mb-3">Custom Internal System</h3>
+
+          <p class="text-gray-400 mb-5">
+            Membangun sistem internal sesuai kebutuhan bisnis, mulai dari input data, akses tim, laporan, hingga dashboard kontrol.
+          </p>
+
+          <ul class="space-y-2 text-sm text-gray-300">
+            <li>✓ Sistem sesuai alur bisnis</li>
+            <li>✓ Akses berdasarkan role</li>
+            <li>✓ Mudah digunakan oleh tim</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT SECTION -->
+  <section id="about" class="py-24 bg-white text-black relative overflow-hidden">
+    <div class="absolute -top-32 -left-32 w-96 h-96 bg-green-400/10 rounded-full blur-3xl"></div>
+
+    <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-14 items-center relative z-10">
+
+      <div class="reveal">
+        <p class="text-green-600 font-bold mb-3">ABOUT MANAGERKU.ID</p>
+        <h2 class="text-3xl md:text-5xl font-black mb-6">
+          Kami Membantu Bisnis Berpindah dari Cara Kerja Manual ke Sistem yang Lebih Terkontrol.
+        </h2>
+
+        <div class="space-y-5 text-gray-700 text-lg leading-relaxed">
+          <p>
+            Banyak bisnis berkembang bukan karena kurang kerja keras, tetapi karena proses operasionalnya belum tertata. Data masih tersebar, laporan sulit dibaca, aktivitas tim tidak selalu terpantau, dan owner sering menjadi pusat dari semua keputusan.
+          </p>
+
+          <p>
+            Managerku.id hadir untuk membantu bisnis merapikan hal itu. Kami memetakan masalah operasional, memahami alur kerja, lalu membangun sistem yang membuat proses bisnis lebih mudah dijalankan dan dievaluasi.
+          </p>
+
+          <p>
+            Fokus kami bukan hanya membuat aplikasi, tetapi menciptakan sistem kerja yang membantu owner, manajer, dan tim melihat apa yang sedang terjadi di dalam bisnis dengan lebih jelas.
+          </p>
+        </div>
+      </div>
+
+      <div class="bg-black rounded-[2rem] p-8 md:p-10 text-white soft-glow reveal floating-slow">
+        <h3 class="text-2xl font-black mb-6">
+          Masalah Operasional yang Kami Bantu Selesaikan
+        </h3>
+
+        <div class="space-y-4">
+          <div class="flex gap-4 group">
+            <div class="w-7 h-7 rounded-full green-gradient flex-shrink-0 mt-1 group-hover:scale-125 transition"></div>
+            <div>
+              <h4 class="font-bold text-lg">Operasional Berantakan</h4>
+              <p class="text-gray-400">Kami bantu menyusun alur kerja agar proses harian lebih jelas dan tidak berjalan berdasarkan ingatan saja.</p>
+            </div>
+          </div>
+
+          <div class="flex gap-4 group">
+            <div class="w-7 h-7 rounded-full green-gradient flex-shrink-0 mt-1 group-hover:scale-125 transition"></div>
+            <div>
+              <h4 class="font-bold text-lg">Data dan Laporan Tercecer</h4>
+              <p class="text-gray-400">Kami bantu mengubah data mentah menjadi laporan yang lebih rapi, mudah dibaca, dan siap dievaluasi.</p>
+            </div>
+          </div>
+
+          <div class="flex gap-4 group">
+            <div class="w-7 h-7 rounded-full green-gradient flex-shrink-0 mt-1 group-hover:scale-125 transition"></div>
+            <div>
+              <h4 class="font-bold text-lg">Tim Sulit Dipantau</h4>
+              <p class="text-gray-400">Kami bantu membuat sistem monitoring agar aktivitas dan tanggung jawab tim lebih transparan.</p>
+            </div>
+          </div>
+
+          <div class="flex gap-4 group">
+            <div class="w-7 h-7 rounded-full green-gradient flex-shrink-0 mt-1 group-hover:scale-125 transition"></div>
+            <div>
+              <h4 class="font-bold text-lg">Owner Terlalu Banyak Mengontrol Manual</h4>
+              <p class="text-gray-400">Kami bantu membangun sistem agar owner tidak harus selalu mengecek semuanya satu per satu.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CONTACT SECTION -->
+  <section id="contact" class="py-24 bg-black relative overflow-hidden">
+    <div class="absolute top-10 left-1/2 -translate-x-1/2 w-96 h-96 bg-green-500/20 rounded-full blur-3xl pulse-glow"></div>
+    <div class="absolute bottom-0 right-0 w-72 h-72 bg-white/5 rounded-full blur-3xl"></div>
+
+    <div class="max-w-4xl mx-auto px-6 text-center relative z-10 reveal">
+      <p class="text-green-400 font-bold mb-3">LET’S BUILD YOUR SYSTEM</p>
+
+      <h2 class="text-3xl md:text-6xl font-black mb-6">
+        Saatnya Bisnismu Punya Sistem Kerja yang Lebih Rapi.
+      </h2>
+
+      <p class="text-gray-300 text-lg md:text-xl leading-relaxed mb-10">
+        Ceritakan masalah operasional yang sedang kamu hadapi. Kami bantu petakan alurnya dan rekomendasikan sistem yang paling sesuai untuk membuat bisnismu lebih mudah dikontrol.
+      </p>
+
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="https://wa.me/6281521889935?text=Halo%20Managerku.id%2C%20saya%20ingin%20konsultasi%20sistem%20untuk%20bisnis%20saya.%20Masalah%20yang%20ingin%20saya%20rapikan%20adalah%20operasional%2C%20tim%2C%20data%2C%20laporan%2C%20atau%20dashboard%20manajemen.%20Bisa%20dibantu%20untuk%20diskusi%20lebih%20lanjut%3F" target="_blank" rel="noopener noreferrer" class="px-8 py-4 rounded-full green-gradient text-black font-extrabold hover:scale-105 transition magnetic-btn">
+          <span>Konsultasi Sistem Sekarang</span>
+        </a>
+
+        <a href="https://instagram.com/managerku.id" target="_blank" rel="noopener noreferrer" class="px-8 py-4 rounded-full border border-white/20 text-white font-bold hover:border-green-400 hover:text-green-400 hover:bg-green-400/5 transition">
+          Lihat Aktivitas Managerku.id
+        </a>
+      </div>
+
+      <div class="mt-12 text-gray-500 text-sm">
+        <p>Managerku.id — Membantu bisnis bekerja lebih rapi, terukur, dan mudah dikontrol.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-white/10 bg-black py-8">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4">
+      <p class="text-gray-500 text-sm">
+        © 2026 Managerku.id. All rights reserved.
+      </p>
+
+      <div class="flex gap-5 text-sm text-gray-500">
+        <a href="#home" class="hover:text-green-400 transition">Home</a>
+        <a href="#portfolio" class="hover:text-green-400 transition">Solutions</a>
+        <a href="#contact" class="hover:text-green-400 transition">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const navbar = document.getElementById('navbar');
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 30) {
+        navbar.classList.add('nav-scrolled');
+      } else {
+        navbar.classList.remove('nav-scrolled');
+      }
+    });
+
+    const revealElements = document.querySelectorAll('.reveal');
+
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+        }
+      });
+    }, {
+      threshold: 0.12
+    });
+
+    revealElements.forEach((element) => {
+      revealObserver.observe(element);
+    });
+  </script>
+
+</body>
+</html>
